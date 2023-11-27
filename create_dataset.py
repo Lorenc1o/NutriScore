@@ -28,21 +28,23 @@ if response.status_code == 200:
                 name = product['product_name']
                 nutriscore = product['nutriscore_grade']
                 energy = product['nutriments']['energy-kcal_100g']
+                # kcal to kJ
+                energy = energy * 4.184
 
                 if 'fat_100g' in product['nutriments']:
-                    fat_g = product['nutriments']['fat_100g'] / 100
+                    fat_g = product['nutriments']['fat_100g']
                 else:
                     fat_g = 0
                     n_zeros += 1
                 
                 if 'sugars_100g' in product['nutriments']:
-                    sugar_g = product['nutriments']['sugars_100g'] / 100
+                    sugar_g = product['nutriments']['sugars_100g']
                 else:
                     sugar_g = 0
                     n_zeros += 1
 
                 if 'sodium_100g' in product['nutriments']:
-                    sodium_mg = product['nutriments']['sodium_100g'] * 1000
+                    sodium_mg = product['nutriments']['sodium_100g']
                 else:
                     sodium_mg = 0
                     n_zeros += 1
@@ -57,13 +59,13 @@ if response.status_code == 200:
                         n_zeros += 1
                 
                 if 'fiber_100g' in product['nutriments']:
-                    fibers_g = product['nutriments']['fiber_100g'] / 100
+                    fibers_g = product['nutriments']['fiber_100g']
                 else:
                     fibers_g = 0
                     n_zeros += 1
 
                 if 'proteins_100g' in product['nutriments']:
-                    proteins_g = product['nutriments']['proteins_100g'] / 100
+                    proteins_g = product['nutriments']['proteins_100g']
                 else:
                     proteins_g = 0
                     n_zeros += 1
