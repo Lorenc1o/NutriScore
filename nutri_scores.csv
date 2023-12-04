@@ -1,62 +1,61 @@
-nutriscore,additive_score,name
+nutriscore,G_0,name
 a,b,Cruesli Mélange De Noix
-e,d,nan
+e,e,nan
 b,b,Anacardi
 b,c,Almonddrink
-a,c,Vanilla
 a,b,Flocons d'avoine complète
 b,b,Corn flakes
 a,b,Spaghetti n.5
 a,b,Alesto mixed nuts (walnuts, hazelnuts, cashews, almonds)
-a,a,Weetabix
+a,b,Weetabix
 b,c,nan
 b,c,Amande sans sucre
 b,c,Hafer Barista Edition
 a,c,No sugars oat
 a,b,Crispy minis
 a,c,Tomaten Fruchtfleisch
-b,b,Lightly sea salted crisps
+b,c,Lightly sea salted crisps
 e,d,Nutella
 a,c,Oat
 d,c,Sour Cream & Onion
 c,b,Smacks
-a,a,Heinz Beanz In a rich tomato sauce
+a,b,Heinz Beanz In a rich tomato sauce
 b,c,Kokosnuss ohne Zucker
-a,a,Weetabix Original
+a,b,Weetabix Original
 c,c,Riegel Oats & Honey
+a,b,Original
 a,b,Swiss Style Muesli No Added Sugar
-a,a,Original
 c,c,Nougat Bits / Choco Hazelnut Pillows
 a,c,Plant protein chocolate flavour
-b,b,Seeded Loaf (Bread)
+b,c,Seeded Loaf (Bread)
 a,b,Maestro classic
 b,c,Hafer Haver Calcium
-d,d,nan
+d,e,nan
 c,c,Tomaten gehackt
-a,b,Vegane Mühlen Schnitzel
-a,a,Weetabix
-a,b,nan
+a,c,Vegane Mühlen Schnitzel
+a,b,Weetabix
+a,c,nan
 a,c,Double Concentrate Tomato Purée
 a,c,Plant Protein
 a,b,Baked Beans
-e,d,Greek white
+e,e,Greek white
 a,b,Oatibix, avena suave
 b,b,Céréales Corn Flakes Kellogg's Original
 b,c,Oat drink barista edition
 a,b,Flocons d'avoine
-c,b,Chips sel de mer et poivre noir
+c,c,Chips sel de mer et poivre noir
 e,d,Schokolade Marzipan
-d,d,Gemüse Oliven, grün, ohne Stein
+d,e,Gemüse Oliven, grün, ohne Stein
 a,c,Simply plain - soya yogurt
-c,b,sea salt & cider vinegar chips
+c,c,sea salt & cider vinegar chips
 a,b,Fusilli n°34
 a,b,Pan de molde grande
-d,b,Protein Peanut & Chocolate Cereal Bar
+d,c,Protein Peanut & Chocolate Cereal Bar
 c,b,Pan de centeno integral
 a,c,Banane
 b,c,Barista Mandel
 a,c,Soya Original
-d,d,Olives vertes
+c,e,Olives vertes
 c,b,Kellogg's Corn Flakes
 a,b,Linguine n° 7
 d,d,Cookies on Cookie Dough Non-Dairy Ice Cream
@@ -64,40 +63,40 @@ e,c,Dolce Gusto Café au Lait
 a,b,Quaker Rolled Oats
 c,c,Soft Datteln entsteint
 b,b,Granola low sugar
-unknown,c,Shin Kimchi Ramyun
-c,b,Kokosraspel
+unknown,d,Shin Kimchi Ramyun
+c,a,Kokosraspel
 b,c,Oat Drink
 unknown,c,Demae Ramen Poulet Sachet
 c,c,Sweet Chilli & Red Pepper
 a,b,Spaghetti
-c,b,Crispbread
+c,c,Fette crocantinis schar
 b,b,Choco Shells
 b,c,nan
 b,b,Oatibix Avena Flakes
 a,c,Organic So Soja! Natural
 a,c,Soya Unsweetened Organic (Red)
-a,a,Weetabix
+a,b,Weetabix
 a,c,Devilishly dark chocolate plant-based dessert
-b,a,chapelure
+b,b,chapelure
 a,b,Bakery Co. 5 The Original Bagels
-e,d,Violife 100% vegan original flavour slices
+e,e,Violife 100% vegan original flavour slices
 b,b,Cheerios Multi
 d,c,Wraps
 c,d,Olivenöl
-e,d,Le Cœur Fleuri Végétal
+e,e,Le Cœur Fleuri Végétal
 b,c,Almond Unsweetened
-c,d,Mandeloliven
-d,d,Dairy Free Spread
+c,e,Mandeloliven
+d,e,Dairy Free Spread
 d,c,Pringles Smokey Bacon Flavour
 b,b,Riz arborio
-unknown,b,Sun-dried Tomatoes
+unknown,c,Sun-dried Tomatoes
 d,c,nan
 not-applicable,c,Fresh mixed peppers
 c,d,Olivenöl
-c,b,Crumpets
-d,b,Artesanas con pipas, Crunchy Breadsticks with Sunflower Seeds
+c,c,Crumpets
+d,c,Artesanas con pipas, Crunchy Breadsticks with Sunflower Seeds
 b,c,Oat unsweetened
-c,c,Sun-dried Tomatoes
+c,d,Sun-dried Tomatoes
 b,c,Schwäbische Spätzle
 a,b,Beanz in a rich tomato sauce ORGANIC
 a,b,Organic Slightly Salted Wholgrain Rice Cakes
@@ -108,23 +107,21 @@ b,c,Vegan spread French style
 b,c,The Original Organic Oat Drink
 a,c,Tofoo Naked
 a,b,Simply nutty muesli
-c,c,Vegetable balls
-c,c,Olives aux Herbes
-a,a,Mince
-unknown,c,Vegan Bouillon powder
+c,d,Vegetable balls
+c,d,Olives aux Herbes
+a,b,Mince
+unknown,d,Vegan Bouillon powder
 c,c,All-Bran Golden Crunch
-b,b,Lightly Sea Salted
+b,c,Lightly Sea Salted
 c,c,Cheese & Onion Flavour Potato Crisps
 b,c,Oatly drink whole fridge version
 c,c,Medaglioni Basilic,Ricotta & Pignons de pain
 a,b,Totally Vegan Smoky Ham Free Slices
 a,c,Smoked Tofu
 b,c,Organic Oat Drink
-a,b,SHREDDED WHEAT Cereal Box
-c,a,Vegemite
+c,b,Vegemite
 b,c,Oat M*lk
-b,a,Crunchy peanut butter
-a,c,Unsweetened UHT Soya Drink
+b,b,Crunchy peanut butter
 a,c,Oat No Sugars
 a,b,Simply Delicious Muesli
 b,c,Nordic Oat Drink
@@ -134,20 +131,21 @@ a,b,Shreddies
 a,b,Ceci - Chickpeas in Water
 a,b,Whole Grain Rye Bread
 a,b,Wholemeal Medium Sliced
-a,a,Dark Rye Crunchy Rye Breads
-c,b,Crunchy Peanut Butter
-c,b,Vegetarian Mozzarella 1/4 LB Burgers
+a,b,Dark Rye Crunchy Rye Breads
+c,c,Crunchy Peanut Butter
+c,c,Vegetarian Mozzarella 1/4 LB Burgers
 b,b,Meridian Crunchy Peanut Butter
 b,a,Crunchy peanut butter
 a,b,Quorn Pieces
 b,c,Organic & unsweetened Almond
-a,b,Gluten Free Brown Ciabatta Rolls
+a,c,Gluten Free Brown Ciabatta Rolls
 a,b,Corn Thins Original
+a,c,Unsweetened UHT Soya Drink
 b,c,The Original Oat Drink Semi
-d,c,Salt Chips
-d,c,Crosta & Mollica Organic Piadina 4 Wholeblend Flatbreads with Extra Virgin Olive Oil
+d,d,Salt Chips
+d,d,Crosta & Mollica Organic Piadina 4 Wholeblend Flatbreads with Extra Virgin Olive Oil
 a,b,Muesli
-b,b,Hamburger Brötchen Classic
+b,c,Hamburger Brötchen Classic
 b,b,Cheerios Multigrain
 a,b,Simply porridge oats
 c,c,Crownfield Premium Fruit and Nut Muesli
@@ -155,40 +153,42 @@ c,b,Marmite Yeast Extract
 b,c,Lincolnshire sausages
 b,b,Smooth peanut butter
 a,b,Baked Beans In Tomato Sauce
-c,b,Quinoa Chips
+c,c,Quinoa Chips
 a,b,Pumpkin Seed & Oat Crispbread
 a,c,Soya Original Drink
 a,c,Organic Soya Unsweetened U.H.T.
+a,b,SHREDDED WHEAT
 d,c,Fine hazelnut chocolate spread
 a,b,What The Cluck Vegan Chicken Style Chunks
 a,b,Beanz No added sugar
 b,c,Minor Figures Barista Oat organic
-e,d,Epic Mature cheddar flavour
 b,c,Oat
-c,c,Kimchi
+c,d,Kimchi
 b,c,Tesco Oat Drink
 a,b,Gut-loving granola
 b,c,Riz Basmati
 a,c,Baked beans
 b,c,Mixed seedless grapes
 d,c,Crunchy Nut Corn Flakes Cereal
-c,c,Houmous
+c,b,Special K The Original
 c,c,Ready Salted Crisps
 b,b,Cheerios
 a,b,Vegan Chicken Free Slices
-b,c,Falafels De Patates Douces BIO
+b,d,Falafels De Patates Douces BIO
 unknown,c,Nescafé classic
+b,c,Spinach Ricotta Tortelloni
 unknown,c,Trésor Kellogg's Choco Roulette offre spéciale
-a,a,Wheat biscuits
 b,b,Special k Red berries
 b,c,Vegan spread mexican style
+c,d,Houmous
 unknown,c,Organic Vegetable Stock Cubes
 c,b,NAKD Noix de Cajou - 140g (4x1p)
 b,c,Tomatenfruchtfleisch mit Basilikum
 a,b,Bran Flakes
+a,b,Wheat biscuits
 b,c,Tofu basil
 a,c,Silken tofu firm
 a,c,Pommes Rouges
 b,b,Schupfnudeln svana
-e,d,Prosociano Bloc
+e,e,Prosociano Bloc
 b,c,Bio Houmous

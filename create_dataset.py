@@ -44,7 +44,7 @@ if response.status_code == 200:
                     n_zeros += 1
 
                 if 'sodium_100g' in product['nutriments']:
-                    sodium_mg = product['nutriments']['sodium_100g']
+                    sodium_mg = product['nutriments']['sodium_100g']*1000
                 else:
                     sodium_mg = 0
                     n_zeros += 1

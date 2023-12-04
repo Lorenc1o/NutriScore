@@ -57,20 +57,22 @@ def additive_nutri_score(dataset_location, columns, utility_functions, weights, 
     scores = np.zeros(len(dataset))
 
     for i, column in enumerate(columns):
+        print("Column:", column)
+        print(utility_functions[column](dataset[column]))
         scores += weights[i] * utility_functions[column](dataset[column])
 
     # Convert each score to a letter
     final = []
     for i, value in enumerate(scores):
-        if value >= 8:
+        if value >= 16:
             final.append('a')
-        elif value >= 6 and value < 8:
+        elif value >= 12 and value < 16:
             final.append('b')
-        elif value >= 4 and value < 6:
+        elif value >= 8 and value < 12:
             final.append('c')
-        elif value >= 2 and value < 4:
+        elif value >= 6 and value < 8:
             final.append('d')
-        elif value < 2:
+        elif value < 6:
             final.append('e')
     
     return scores, final
@@ -119,22 +121,37 @@ def show_confusion_matrix(new_scores, initial_scores):
 
 
 filename = 'data.csv'
-columns = [#'energy', 
-    'fat_g', 'sugar_g', 'sodium_mg', 'perc_fruit', 'fibers_g', 'proteins_g']
-utility_functions = { #'energy': lambda x: 10-values_to_scale(filename, 'energy', [335,670,1005,1340,1675,2010,2345,2680,3015,3350]),
-                        'fat_g': lambda x: 10-values_to_scale(filename, 'fat_g', [1,2,3,4,5,6,7,8,9,10]),
-                        'sugar_g': lambda x: 10-values_to_scale(filename, 'sugar_g', [4.5,9,13.5,18,22.5,27,31,36,40,45]),
-                        'sodium_mg': lambda x: 10-values_to_scale(filename, 'sodium_mg', [90,180,270,360,450,540,630,720,810,900]),
-                        'perc_fruit': lambda x: 2*values_to_scale(filename, 'perc_fruit', [10,20,30,40,60]),
-                        'fibers_g': lambda x: 2*values_to_scale(filename, 'fibers_g', [0.9,1.9,2.8,3.7,4.7]),
-                        'proteins_g': lambda x: 2*values_to_scale(filename, 'proteins_g', [1.6,3.2,4.8,6.4,8])}
 
-weights = [#1/6,
+# Exercise 4 
+
+columns_ex4 = [#'energy', 
+    'fat_g', 'sugar_g', 'sodium_mg', 'perc_fruit', 'fibers_g', 'proteins_g']
+utility_functions = { #'energy': lambda x: 10-values_to_scale(filename, 'energy', [335,670,1005,1340,1675,2010,2345,2680,3015,3350]),     # 65.2;6.6;20.0;100;14.8;7.4
+                        'fat_g': lambda x: 20-values_to_scale(filename, 'fat_g', [0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10]), # 0
+                        'sugar_g': lambda x: 20-values_to_scale(filename, 'sugar_g', [2.25,4.5,6.75,9,11.25,13.5,15.75,18,20.25,22.5,25.75,27,29.25,31,33.25,35.5,37.75,40,42.25,45]), # 18
+                        'sodium_mg': lambda x: 20-values_to_scale(filename, 'sodium_mg', [45,90,135,180,225,270,315,360,405,450,495,540,585,630,675,720,765,810,855,900]), # 20
+                        'perc_fruit': lambda x: 2*values_to_scale(filename, 'perc_fruit', [5,10,15,20,25,30,35,40,45,50]), # 20
+                        'fibers_g': lambda x: 2*values_to_scale(filename, 'fibers_g', [0.47,0.94,1.42,1.89,2.36,2.83,3.3,3.77,4.24,4.7]), # 20
+                        'proteins_g': lambda x: 2*values_to_scale(filename, 'proteins_g', [0.8,1.6,2.4,3.2,4,4.8,5.6,6.4,7.2,8])}  # 18
+
+weights_ex4 = [#1/6,
            1/6,1/6,1/6,1/6,1/6,1/6]
+
+# Exercise 5
+
+weigths_ex5 = [1,1,1,1,2,2,2]
+
+lambda_ex5 = [0.5, 0.6, 0.7]
+
+profiles = {
+
+}
+
+
 
 if __name__ == '__main__':
     # Calculate the additive score
-    additive_score, nutriscore = additive_nutri_score(filename, columns, utility_functions, weights)
+    additive_score, nutriscore = additive_nutri_score(filename, columns_ex4, utility_functions, weights_ex4)
 
     print(len(additive_score), len(nutriscore))
 
@@ -152,7 +169,7 @@ if __name__ == '__main__':
 
     # Save the additive score to a file with the nutriscore and the name of the product
     with open('nutri_scores.csv', 'w') as f:
-        f.write('nutriscore,additive_score,name\n')
+        f.write('nutriscore,G_0,name\n')
         for i, row in dataset.iterrows():
             f.write(f'{row["nutriscore"]},{nutriscore[i]},{row["name"]}\n')
 
