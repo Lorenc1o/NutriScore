@@ -63,10 +63,10 @@ id;name;nutriscore;energy;fat_g;sugar_g;sodium_mg;perc_fruit;fibers_g;proteins_g
 5000108022152;Quaker Rolled Oats;a;1564.816;8;1.1;0;0;9;11
 20534479;Soft Datteln entsteint;c;1192.44;0.3;57;12.0;0;6.9;2.2
 5060092030687;Granola low sugar;b;2096.184;27.1;3.8;8.0;0;9.7;14.2
-8801043157742;Shin Kimchi Ramyun;unknown;1786.568;13;4.9;1800.0;0;0;9.6
+8801043157742;Shin Kimchi Ramyun;e;1786.568;13;4.9;1800.0;0;0;9.6
 4056489104254;Kokosraspel;c;2794.9120000000003;65.2;6.6;20.0;100;14.8;7.4
 7394376614545;Oat Drink;b;192.464;1.5;4.1;40.0;0;0.8;1
-8712429350100;Demae Ramen Poulet Sachet;unknown;380.744;4;0.4;440.0;0;0;2
+8712429350100;Demae Ramen Poulet Sachet;e;380.744;4;0.4;440.0;0;0;2
 5060042641413;Sweet Chilli & Red Pepper;c;1958.112;25;5.1;440.0;0;5.4;6.3
 20003463;Spaghetti;a;1464.4;1.2;3.2;0;0;3.5;12.5
 8008698007303;Fette crocantinis schar;c;1589.92;1.7;6;560.0;0;2.3;6
@@ -89,9 +89,8 @@ id;name;nutriscore;energy;fat_g;sugar_g;sodium_mg;perc_fruit;fibers_g;proteins_g
 5000373704289;Dairy Free Spread;d;2108.736;56;0;600.0;0;0;0
 5053990162765;Pringles Smokey Bacon Flavour;d;2171.496;29;3;640.0;0;3.6;6.6
 20054830;Riz arborio;b;1481.136;0.4;0.2;4.0;0;0;6.7
-20487942;Sun-dried Tomatoes;unknown;577.392;0.7;17;2640.0;0;6;7
+20487942;Sun-dried Tomatoes;e;577.392;0.7;17;2640.0;0;6;7
 5738001776017;;d;2012.5040000000001;22;19;320.0;0;5.7;8
-20242152;Fresh mixed peppers;not-applicable;100.416;0.2;3.7;4.0;0;2;0.8
 20293604;Olivenöl;c;3447.616;91.6;0;0;0;0;0
 5010044005126;Crumpets;c;736.384;0.8;2;592.0;0;1.9;6
 4056489408178;Artesanas con pipas, Crunchy Breadsticks with Sunflower Seeds;d;2167.312;30;1.4;772.0;0;4;10.6
@@ -110,7 +109,7 @@ id;name;nutriscore;energy;fat_g;sugar_g;sodium_mg;perc_fruit;fibers_g;proteins_g
 1704877950008;Vegetable balls;c;711.28;8.6;2.5;640.0;0;0;7.7
 3524130003177;Olives aux Herbes;c;1158.968;28;0.5;1480.0;0;3.8;1.3
 5019503018974;Mince;a;439.32;2;0.6;120.0;0;5.5;14.5
-50160884;Vegan Bouillon powder;unknown;1008.344;8.4;3.9;17520.0;0;0;9.6
+50160884;Vegan Bouillon powder;e;1008.344;8.4;3.9;17520.0;0;0;9.6
 5050083563133;All-Bran Golden Crunch;c;1702.8880000000001;11;21;332.0;0;13;7.6
 5060042640744;Lightly Sea Salted;b;2096.184;24.4;2;200.0;0;5.3;5.9
 51000005;Cheese & Onion Flavour Potato Crisps;c;2150.576;29;2.6;480.0;0;3.8;6.3
@@ -125,7 +124,7 @@ id;name;nutriscore;energy;fat_g;sugar_g;sodium_mg;perc_fruit;fibers_g;proteins_g
 5411188124702;Oat No Sugars;a;167.36;1.5;0;36.0;0;1.2;0.2
 5018357012411;Simply Delicious Muesli;a;1539.712;7.3;14.7;10.0;0;9;9.6
 5711953121234;Nordic Oat Drink;b;205.01600000000002;1.5;3.3;68.0;0;0;1.2
-5053990160242;SIZZL‘N SPICY SPICY BBQ FLAVOUR;unknown;2175.6800000000003;29;4.4;0;0;0;5.2
+5053990160242;SIZZL‘N SPICY SPICY BBQ FLAVOUR;e;2175.6800000000003;29;4.4;0;0;0;5.2
 5060132284322;Peanut butter Crunchy;d;2493.664;46;5.9;0;0;8.5;30
 7613287154231;Shreddies;a;1522.976;1.8;12.5;288.0;0;12;10.8
 20475598;Ceci - Chickpeas in Water;a;531.368;2.7;0.5;10.0;0;5.1;6.7
@@ -175,13 +174,13 @@ id;name;nutriscore;energy;fat_g;sugar_g;sodium_mg;perc_fruit;fibers_g;proteins_g
 5011476100885;Cheerios;b;1606.656;5;17.6;332.0;0;8.9;9.2
 5019503034189;Vegan Chicken Free Slices;a;393.296;2.3;0.5;520.0;0;6.2;11
 8714685903229;Falafels De Patates Douces BIO;b;711.28;9.7;4;320.0;0;0;6
-3033710038381;Nescafé classic;unknown;4.184;0;0;0;0;0;0.2
+3033710038381;Nescafé classic;e;4.184;0;0;0;0;0;0.2
 00336789;Spinach Ricotta Tortelloni;b;673.624;3.3;1.4;140.0;0;1.7;6.3
-5053827199728;Trésor Kellogg's Choco Roulette offre spéciale;unknown;1874.432;0;0;0;0;0;0
+5053827199728;Trésor Kellogg's Choco Roulette offre spéciale;e;1874.432;0;0;0;0;0;0
 5059319003931;Special k Red berries;b;1631.76;1.4;16;292.0;0;6.6;8
 4056489067726;Vegan spread mexican style;b;736.384;13;0.7;520.0;0;2.3;7
 5000169022900;Houmous;c;1188.256;22.7;0.7;320.0;0;0;6.3
-5013665112273;Organic Vegetable Stock Cubes;unknown;29.288;0.4;0.3;360.0;0;0;0
+5013665112273;Organic Vegetable Stock Cubes;e;29.288;0.4;0.3;360.0;0;0;0
 5060088705063;NAKD Noix de Cajou - 140g (4x1p);c;1715.44;23.4;39.2;40.0;100;4.7;10
 8005110170423;Tomatenfruchtfleisch mit Basilikum;b;108.784;0.2;2.8;120.0;0;0;1.2
 5053827193368;Bran Flakes;a;1497.872;2.2;14;264.0;0;17;11

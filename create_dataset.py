@@ -27,6 +27,10 @@ if response.status_code == 200:
                 id = product['id']
                 name = product['product_name']
                 nutriscore = product['nutriscore_grade']
+                if nutriscore == 'unknown':
+                    nutriscore = 'e'
+                if nutriscore == 'not-applicable':
+                    continue
                 energy = product['nutriments']['energy-kcal_100g']
                 # kcal to kJ
                 energy = energy * 4.184

@@ -1,6 +1,11 @@
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import tree
+from sklearn.metrics import accuracy_score
 
 def values_to_scale(dataset_location, column, intervals, sep=';'):
     # Load the dataset
@@ -57,8 +62,6 @@ def additive_nutri_score(dataset_location, columns, utility_functions, weights, 
     scores = np.zeros(len(dataset))
 
     for i, column in enumerate(columns):
-        print("Column:", column)
-        print(utility_functions[column](dataset[column]))
         scores += weights[i] * utility_functions[column](dataset[column])
 
     # Convert each score to a letter
@@ -82,7 +85,7 @@ def show_scores_histogram(scores, bins=10):
     plt.hist(scores, bins=bins)
     plt.show()
 
-def show_confusion_matrix(new_scores, initial_scores):
+def show_confusion_matrix(new_scores, initial_scores, title, xlabel, ylabel):
     # Show the confusion matrix: a, b, c, d, e
     confusion_matrix = np.zeros((5,5))
     idx = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4}
@@ -110,14 +113,168 @@ def show_confusion_matrix(new_scores, initial_scores):
             text = ax.text(j, i, confusion_matrix[i, j],
                         ha="center", va="center", color="w")
             
-    ax.set_title("Confusion matrix")
-    ax.set_xlabel("Our score")
-    ax.set_ylabel("Actual score")
+    ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
     # Add a colorbar
     fig.colorbar(im)
     fig.tight_layout()
     plt.show()
 
+def compare_profiles(new, base, weights, lambda_threshold, direction):
+    print("new")
+    print(new)
+    print("base")
+    print(base)
+    print("fullweight")
+    print(sum(weights))
+    print("lambda")
+    print(lambda_threshold)
+    acc = 0
+    print("value evolution")
+    for i, value in enumerate(new):
+        if direction[i] == 'big':
+            if value > base[i]:
+                acc += weights[i]
+        else:
+            if value < base[i]:
+                acc += weights[i]
+        print(acc)
+    if acc >= lambda_threshold:
+        return True
+    return False
+
+def PessimisticMajoritySorting(dataset_location, columns, weights, profiles, lambda_threshold, directions, sep=';'):
+    # Load the dataset
+    dataset = pd.read_csv(dataset_location, sep=sep)
+    dataset = dataset[columns]
+
+    # Calculate the score
+    nutriscores = []
+
+    total_weights = sum(weights)
+
+    for i, row in dataset.iterrows():
+        if compare_profiles(row, profiles['b'], weights, lambda_threshold*total_weights, directions):
+            nutriscores.append('a')
+        elif compare_profiles(row, profiles['c'], weights, lambda_threshold*total_weights, directions):
+            nutriscores.append('b')
+        elif compare_profiles(row, profiles['d'], weights, lambda_threshold*total_weights, directions):
+            nutriscores.append('c')
+        elif compare_profiles(row, profiles['e'], weights, lambda_threshold*total_weights, directions):
+            nutriscores.append('d')
+        else:
+            nutriscores.append('e')
+    
+    return nutriscores
+
+def OptimisticMajoritySorting(dataset_location, columns, weights, profiles, lambda_threshold, directions, sep=';'):
+    # Load the dataset
+    dataset = pd.read_csv(dataset_location, sep=sep)
+    dataset = dataset[columns]
+
+    # Calculate the score
+    nutriscores = []
+
+    total_weights = sum(weights)
+
+    for i, row in dataset.iterrows():
+        if not compare_profiles(row, profiles['d'], weights, lambda_threshold*total_weights, directions):
+            nutriscores.append('e')
+        elif not compare_profiles(row, profiles['c'], weights, lambda_threshold*total_weights, directions):
+            nutriscores.append('d')
+        elif not compare_profiles(row, profiles['b'], weights, lambda_threshold*total_weights, directions):
+            nutriscores.append('c')
+        elif not compare_profiles(row, profiles['a'], weights, lambda_threshold*total_weights, directions):
+            nutriscores.append('b')
+        else:
+            nutriscores.append('a')
+    
+    return nutriscores
+
+def DecisionTreeNutriscore(dataset_location, columns, sep=';'):
+    # Load the dataset
+    dataset = pd.read_csv(dataset_location, sep=sep)
+    dataset = dataset[columns]
+
+    # Separate the dataset into training and test
+    # 60% training, 40% test
+    training = dataset.sample(frac=0.6)
+    test = dataset.drop(training.index)
+
+    print('Training dataset:', training)
+
+    # Train the decision tree
+    X = training.drop(columns=['nutriscore'])
+    y = training['nutriscore']
+
+    clf = DecisionTreeClassifier()
+
+    clf.fit(X, y)
+
+    # Predict the nutriscore for the test dataset
+    X_test = test.drop(columns=['nutriscore'])
+    y_test = test['nutriscore']
+
+    y_pred = clf.predict(X_test)
+
+    return clf, clf.predict(dataset.drop(columns=['nutriscore'])), accuracy_score(y_test, y_pred)
+
+def kNN_Nutriscore(dataset_location, columns, sep=';'):
+    # Load the dataset
+    dataset = pd.read_csv(dataset_location, sep=sep)
+    dataset = dataset[columns]
+
+    # Separate the dataset into training and test
+    # 60% training, 40% test
+    training = dataset.sample(frac=0.6)
+    test = dataset.drop(training.index)
+
+    print('Training dataset:', training)
+
+    # Train the kNN classifier
+    X = training.drop(columns=['nutriscore'])
+    y = training['nutriscore']
+
+    clf = KNeighborsClassifier(n_neighbors=5)
+
+    clf.fit(X, y)
+
+    # Predict the nutriscore for the test dataset
+    X_test = test.drop(columns=['nutriscore'])
+    y_test = test['nutriscore']
+
+    y_pred = clf.predict(X_test)
+
+    return clf, clf.predict(dataset.drop(columns=['nutriscore'])), accuracy_score(y_test, y_pred)
+
+def RandomForestNutriscore(dataset_location, columns, sep=';'):
+    # Load the dataset
+    dataset = pd.read_csv(dataset_location, sep=sep)
+    dataset = dataset[columns]
+
+    # Separate the dataset into training and test
+    # 60% training, 40% test
+    training = dataset.sample(frac=0.6)
+    test = dataset.drop(training.index)
+
+    print('Training dataset:', training)
+
+    # Train the random forest classifier
+    X = training.drop(columns=['nutriscore'])
+    y = training['nutriscore']
+
+    clf = RandomForestClassifier()
+
+    clf.fit(X, y)
+
+    # Predict the nutriscore for the test dataset
+    X_test = test.drop(columns=['nutriscore'])
+    y_test = test['nutriscore']
+
+    y_pred = clf.predict(X_test)
+
+    return clf, clf.predict(dataset.drop(columns=['nutriscore'])), accuracy_score(y_test, y_pred)
 
 
 filename = 'data.csv'
@@ -126,6 +283,13 @@ filename = 'data.csv'
 
 columns_ex4 = [#'energy', 
     'fat_g', 'sugar_g', 'sodium_mg', 'perc_fruit', 'fibers_g', 'proteins_g']
+
+# Changes:
+# - Doubled the granularity of the utility functions
+# - Fruit is considered very important, so we give max points with just 50% of fruit
+# - Weights are now 1/6 for each attribute
+# - The scale goes from 0 to 20, making it easier to comprehend
+
 utility_functions = { #'energy': lambda x: 10-values_to_scale(filename, 'energy', [335,670,1005,1340,1675,2010,2345,2680,3015,3350]),     # 65.2;6.6;20.0;100;14.8;7.4
                         'fat_g': lambda x: 20-values_to_scale(filename, 'fat_g', [0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10]), # 0
                         'sugar_g': lambda x: 20-values_to_scale(filename, 'sugar_g', [2.25,4.5,6.75,9,11.25,13.5,15.75,18,20.25,22.5,25.75,27,29.25,31,33.25,35.5,37.75,40,42.25,45]), # 18
@@ -138,46 +302,93 @@ weights_ex4 = [#1/6,
            1/6,1/6,1/6,1/6,1/6,1/6]
 
 # Exercise 5
-
-weigths_ex5 = [1,1,1,1,2,2,2]
+columns_ex5 = ['energy', 'fat_g', 'sugar_g', 'sodium_mg', 'perc_fruit', 'fibers_g', 'proteins_g']
+weights_ex5 = [1,1,1,1,2,2,2]
+directions_ex5 = ['small','small','small','small','big','big','big']
 
 lambda_ex5 = [0.5, 0.6, 0.7]
 
 profiles = {
-
+    'a': [335, 1, 4.5, 90, 50, 4.7, 8],
+    'b': [670, 2, 9, 180, 45, 4.24, 7.2],
+    'c': [1340, 4, 18, 360, 35, 3.3, 5.6],
+    'd': [2010, 6, 27, 540, 25, 2.36, 4],
+    'e': [2680, 8, 36, 720, 15, 1.42, 2.4]
 }
 
-
+# Exercise 6
+columns_ex6 = ['energy', 'fat_g', 'sugar_g', 'sodium_mg', 'perc_fruit', 'fibers_g', 'proteins_g', 'nutriscore']
 
 if __name__ == '__main__':
     # Calculate the additive score
     additive_score, nutriscore = additive_nutri_score(filename, columns_ex4, utility_functions, weights_ex4)
 
-    print(len(additive_score), len(nutriscore))
+    # Calculate the Pessimistic Majority Sorting
+    pms = [PessimisticMajoritySorting(filename, columns_ex5, weights_ex5, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
+
+    # Calculate the Optimistic Majority Sorting
+    oms = [OptimisticMajoritySorting(filename, columns_ex5, weights_ex5, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
+
+    # Calculate the Decision Tree Nutriscore
+    clf, decision_tree_nutriscore, accuracy = DecisionTreeNutriscore(filename, columns_ex6)
+
+    # Calculate the kNN Nutriscore
+    clf_kNN, kNN_score, accuracy_kNN = kNN_Nutriscore(filename, columns_ex6)
+
+    # Calculate the Random Forest Nutriscore
+    clf_RF, RF_score, accuracy_RF = RandomForestNutriscore(filename, columns_ex6)
 
     # Print the computed score and the nutriscore from the dataset for each product
     dataset = pd.read_csv(filename, sep=';')
-    n_corrects = 0
-    for i, row in dataset.iterrows():
+    #n_corrects = 0
+    #for i, row in dataset.iterrows():
         # Print the two scores and the comparison of their lowcase versions
-        print(row['nutriscore'], nutriscore[i], additive_score[i], row['nutriscore'].lower() == nutriscore[i].lower())
-        if row['nutriscore'].lower() == nutriscore[i].lower():
-            n_corrects += 1
+    #    print(row['nutriscore'], nutriscore[i], additive_score[i], row['nutriscore'].lower() == nutriscore[i].lower())
+    #    if row['nutriscore'].lower() == nutriscore[i].lower():
+    #        n_corrects += 1
 
     # Print the percentage of correct scores
-    print('Correct scores:', n_corrects / len(nutriscore))
+    #print('Percentage of correct scores:', n_corrects / len(dataset))
+
+    all_scores = {
+        'nutriscore': dataset['nutriscore'],
+        'G_0': nutriscore,
+        'PMS_0.5': pms[0],
+        'PMS_0.6': pms[1],
+        'PMS_0.7': pms[2],
+        'OMS_0.5': oms[0],
+        'OMS_0.6': oms[1],
+        'OMS_0.7': oms[2],
+        'Decision Tree': decision_tree_nutriscore,
+        'kNN': kNN_score,
+        'Random Forest': RF_score
+    }
 
     # Save the additive score to a file with the nutriscore and the name of the product
     with open('nutri_scores.csv', 'w') as f:
-        f.write('nutriscore,G_0,name\n')
+        header = 'nutriscore,G_0,PMS_0.5,PMS_0.6,PMS_0.7,OMS_0.5,OMS_0.6,OMS_0.7,Decision Tree,kNN,Random Forest\n'
+        f.write(header)
         for i, row in dataset.iterrows():
-            f.write(f'{row["nutriscore"]},{nutriscore[i]},{row["name"]}\n')
-
-    print(max(additive_score), min(additive_score))
+            f.write(f'{row["nutriscore"]},{nutriscore[i]},{pms[0][i]},{pms[1][i]},{pms[2][i]},{oms[0][i]},{oms[1][i]},{oms[2][i]}, {decision_tree_nutriscore[i]}, {kNN_score[i]}, {RF_score[i]}\n')
 
     # Show the histogram of the scores
     show_scores_histogram(additive_score, bins=100)
 
     # Show the confusion matrix
     real_scores = [x if x in ['a', 'b', 'c', 'd', 'e'] else 'e' for x in dataset['nutriscore']]
-    show_confusion_matrix(nutriscore, real_scores)
+    show_confusion_matrix(nutriscore, real_scores, 'Additive Nutriscore', 'Predicted', 'Real')
+    for i in range(len(pms)):
+        lambda_threshold = lambda_ex5[i]
+        show_confusion_matrix(pms[i], real_scores, f'Pessimistic Majority Sorting (lambda={lambda_threshold})', 'Predicted', 'Real')
+    for i in range(len(oms)):
+        lambda_threshold = lambda_ex5[i]
+        show_confusion_matrix(oms[i], real_scores, f'Optimistic Majority Sorting (lambda={lambda_threshold})', 'Predicted', 'Real')    
+    show_confusion_matrix(decision_tree_nutriscore, real_scores, 'Decision Tree', 'Predicted', 'Real')
+    show_confusion_matrix(kNN_score, real_scores, 'kNN', 'Predicted', 'Real')
+    show_confusion_matrix(RF_score, real_scores, 'Random Forest', 'Predicted', 'Real')
+
+    show_confusion_matrix(decision_tree_nutriscore, RF_score, 'Decision Tree vs Random Forest', 'Decision Tree', 'Random Forest')
+
+    # Show the decision tree
+    tree.plot_tree(clf, filled=True)
+    plt.show()
