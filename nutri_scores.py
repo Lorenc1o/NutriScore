@@ -122,29 +122,19 @@ def show_confusion_matrix(new_scores, initial_scores, title, xlabel, ylabel):
     plt.show()
 
 def compare_profiles(new, base, weights, lambda_threshold, direction):
-    print("new")
-    print(new)
-    print("base")
-    print(base)
-    print("fullweight")
-    print(sum(weights))
-    print("lambda")
-    print(lambda_threshold)
     acc = 0
-    print("value evolution")
     for i, value in enumerate(new):
         if direction[i] == 'big':
-            if value > base[i]:
+            if value >= base[i]:
                 acc += weights[i]
         else:
-            if value < base[i]:
+            if value <= base[i]:
                 acc += weights[i]
-        print(acc)
     if acc >= lambda_threshold:
         return True
     return False
 
-def PessimisticMajoritySorting(dataset_location, columns, weights, profiles, lambda_threshold, directions, sep=';'):
+def PessimisticMajoritySorting(dataset_location, columns, utility_functions, weights, profiles, lambda_threshold, directions, sep=';'):
     # Load the dataset
     dataset = pd.read_csv(dataset_location, sep=sep)
     dataset = dataset[columns]
@@ -154,21 +144,27 @@ def PessimisticMajoritySorting(dataset_location, columns, weights, profiles, lam
 
     total_weights = sum(weights)
 
-    for i, row in dataset.iterrows():
-        if compare_profiles(row, profiles['b'], weights, lambda_threshold*total_weights, directions):
+    # Create dataframe utilities with columns = columns, and rows = len(dataset)
+    utilities = pd.DataFrame(columns=columns, index=range(len(dataset)))
+
+    for column in columns:
+        utilities[column] = utility_functions[column](dataset[column])
+
+    for i, row in utilities.iterrows():
+        if compare_profiles(row, profiles['a'], weights, lambda_threshold*total_weights, directions):
             nutriscores.append('a')
-        elif compare_profiles(row, profiles['c'], weights, lambda_threshold*total_weights, directions):
+        elif compare_profiles(row, profiles['b'], weights, lambda_threshold*total_weights, directions):
             nutriscores.append('b')
-        elif compare_profiles(row, profiles['d'], weights, lambda_threshold*total_weights, directions):
+        elif compare_profiles(row, profiles['c'], weights, lambda_threshold*total_weights, directions):
             nutriscores.append('c')
-        elif compare_profiles(row, profiles['e'], weights, lambda_threshold*total_weights, directions):
+        elif compare_profiles(row, profiles['d'], weights, lambda_threshold*total_weights, directions):
             nutriscores.append('d')
         else:
             nutriscores.append('e')
     
     return nutriscores
 
-def OptimisticMajoritySorting(dataset_location, columns, weights, profiles, lambda_threshold, directions, sep=';'):
+def OptimisticMajoritySorting(dataset_location, columns, utility_functions, weights, profiles, lambda_threshold, directions, sep=';'):
     # Load the dataset
     dataset = pd.read_csv(dataset_location, sep=sep)
     dataset = dataset[columns]
@@ -178,18 +174,24 @@ def OptimisticMajoritySorting(dataset_location, columns, weights, profiles, lamb
 
     total_weights = sum(weights)
 
-    for i, row in dataset.iterrows():
+    # Create dataframe utilities with columns = columns, and rows = len(dataset)
+    utilities = pd.DataFrame(columns=columns, index=range(len(dataset)))
+
+    for column in columns:
+        utilities[column] = utility_functions[column](dataset[column])
+
+    for i, row in utilities.iterrows():
         if not compare_profiles(row, profiles['d'], weights, lambda_threshold*total_weights, directions):
             nutriscores.append('e')
         elif not compare_profiles(row, profiles['c'], weights, lambda_threshold*total_weights, directions):
             nutriscores.append('d')
-        elif not compare_profiles(row, profiles['b'], weights, lambda_threshold*total_weights, directions):
+        elif compare_profiles(row, profiles['b'], weights, lambda_threshold*total_weights, directions):
             nutriscores.append('c')
         elif not compare_profiles(row, profiles['a'], weights, lambda_threshold*total_weights, directions):
             nutriscores.append('b')
         else:
             nutriscores.append('a')
-    
+
     return nutriscores
 
 def DecisionTreeNutriscore(dataset_location, columns, sep=';'):
@@ -290,7 +292,7 @@ columns_ex4 = [#'energy',
 # - Weights are now 1/6 for each attribute
 # - The scale goes from 0 to 20, making it easier to comprehend
 
-utility_functions = { #'energy': lambda x: 10-values_to_scale(filename, 'energy', [335,670,1005,1340,1675,2010,2345,2680,3015,3350]),     # 65.2;6.6;20.0;100;14.8;7.4
+utility_functions = { 'energy': lambda x: 20-values_to_scale(filename, 'energy', [167.5,335,502.5,670,837.5,1005,1172.5,1340,1507.5,1675,1842.5,2010,2177.5,2345,2512.5,2680,2847.5,3015,3182.5,3350]),     # 65.2;6.6;20.0;100;14.8;7.4
                         'fat_g': lambda x: 20-values_to_scale(filename, 'fat_g', [0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,8,8.5,9,9.5,10]), # 0
                         'sugar_g': lambda x: 20-values_to_scale(filename, 'sugar_g', [2.25,4.5,6.75,9,11.25,13.5,15.75,18,20.25,22.5,25.75,27,29.25,31,33.25,35.5,37.75,40,42.25,45]), # 18
                         'sodium_mg': lambda x: 20-values_to_scale(filename, 'sodium_mg', [45,90,135,180,225,270,315,360,405,450,495,540,585,630,675,720,765,810,855,900]), # 20
@@ -303,17 +305,18 @@ weights_ex4 = [#1/6,
 
 # Exercise 5
 columns_ex5 = ['energy', 'fat_g', 'sugar_g', 'sodium_mg', 'perc_fruit', 'fibers_g', 'proteins_g']
-weights_ex5 = [1,1,1,1,2,2,2]
+weights_ex5 = [1,1,1,1,2,1,1]
 directions_ex5 = ['small','small','small','small','big','big','big']
 
 lambda_ex5 = [0.5, 0.6, 0.7]
 
 profiles = {
-    'a': [335, 1, 4.5, 90, 50, 4.7, 8],
-    'b': [670, 2, 9, 180, 45, 4.24, 7.2],
-    'c': [1340, 4, 18, 360, 35, 3.3, 5.6],
-    'd': [2010, 6, 27, 540, 25, 2.36, 4],
-    'e': [2680, 8, 36, 720, 15, 1.42, 2.4]
+    'best': [20, 20, 20, 20, 20, 20, 20],
+    'a': [16, 16, 16, 16, 16, 16, 16],
+    'b': [12, 12, 12, 12, 12, 12, 12],
+    'c': [8, 8, 8, 8, 8, 8, 8],
+    'd': [6, 6, 6, 6, 6, 6, 6],
+    'e': [0, 0, 0, 0, 0, 0, 0]
 }
 
 # Exercise 6
@@ -324,10 +327,10 @@ if __name__ == '__main__':
     additive_score, nutriscore = additive_nutri_score(filename, columns_ex4, utility_functions, weights_ex4)
 
     # Calculate the Pessimistic Majority Sorting
-    pms = [PessimisticMajoritySorting(filename, columns_ex5, weights_ex5, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
+    pms = [PessimisticMajoritySorting(filename, columns_ex5, utility_functions, weights_ex5, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
 
     # Calculate the Optimistic Majority Sorting
-    oms = [OptimisticMajoritySorting(filename, columns_ex5, weights_ex5, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
+    oms = [OptimisticMajoritySorting(filename, columns_ex5, utility_functions, weights_ex5, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
 
     # Calculate the Decision Tree Nutriscore
     clf, decision_tree_nutriscore, accuracy = DecisionTreeNutriscore(filename, columns_ex6)
