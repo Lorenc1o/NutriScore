@@ -85,6 +85,23 @@ def show_scores_histogram(scores, bins=10):
     plt.hist(scores, bins=bins)
     plt.show()
 
+def show_nutriscore_histogram(nutriscores, title = 'Nutriscore - Histogram', xlabel = 'Nutriscore', ylabel = 'Frequency'):
+    # Map the nutriscores from letters to numbers
+    score_map = {'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5}
+    numeric_scores = [score_map[score] for score in nutriscores]
+
+    # Define the bin edges (1.5, 2.5, ... 5.5) to center the bars on integers
+    bins = [0.5, 1.5, 2.5, 3.5, 4.5, 5.5]
+
+    # Plot the histogram
+    plt.hist(numeric_scores, bins=bins, align='mid', rwidth=0.8)
+    plt.xticks(ticks=[1, 2, 3, 4, 5], labels=['a', 'b', 'c', 'd', 'e'])
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.show()
+
+
 def show_confusion_matrix(new_scores, initial_scores, title, xlabel, ylabel):
     # Show the confusion matrix: a, b, c, d, e
     confusion_matrix = np.zeros((5,5))
@@ -305,7 +322,7 @@ weights_ex4 = [#1/6,
 
 # Exercise 5
 columns_ex5 = ['energy', 'fat_g', 'sugar_g', 'sodium_mg', 'perc_fruit', 'fibers_g', 'proteins_g']
-weights_ex5 = [1,1,1,1,2,1,1]
+weights_ex5 = [1,1,1,1,2,2,2]
 directions_ex5 = ['small','small','small','small','big','big','big']
 
 lambda_ex5 = [0.5, 0.6, 0.7]
