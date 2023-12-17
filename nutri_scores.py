@@ -323,7 +323,7 @@ weights_ex4 = [#1/6,
 # Exercise 5
 columns_ex5 = ['energy', 'fat_g', 'sugar_g', 'sodium_mg', 'perc_fruit', 'fibers_g', 'proteins_g']
 weights_ex5 = [1,1,1,1,2,2,2]
-weights_ex5_ours = [1,1,1,1,1,4,1]
+weights_ex5_ours = [1/2,1,1,1,2,4,2]
 directions_ex5 = ['small','small','small','small','big','big','big']
 
 lambda_ex5 = [0.5, 0.6, 0.7]
