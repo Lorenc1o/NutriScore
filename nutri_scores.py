@@ -323,6 +323,7 @@ weights_ex4 = [#1/6,
 # Exercise 5
 columns_ex5 = ['energy', 'fat_g', 'sugar_g', 'sodium_mg', 'perc_fruit', 'fibers_g', 'proteins_g']
 weights_ex5 = [1,1,1,1,2,2,2]
+weights_ex5_ours = [1,1,1,1,1,4,1]
 directions_ex5 = ['small','small','small','small','big','big','big']
 
 lambda_ex5 = [0.5, 0.6, 0.7]
@@ -346,8 +347,14 @@ if __name__ == '__main__':
     # Calculate the Pessimistic Majority Sorting
     pms = [PessimisticMajoritySorting(filename, columns_ex5, utility_functions, weights_ex5, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
 
+    # Calculate the Optimistic Majority Sorting with our weights 
+    pms_ours = [OptimisticMajoritySorting(filename, columns_ex5, utility_functions, weights_ex5_ours, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
+
     # Calculate the Optimistic Majority Sorting
     oms = [OptimisticMajoritySorting(filename, columns_ex5, utility_functions, weights_ex5, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
+
+    # Calculate the Optimistic Majority Sorting with our weights
+    oms_ours = [OptimisticMajoritySorting(filename, columns_ex5, utility_functions, weights_ex5_ours, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
 
     # Calculate the Decision Tree Nutriscore
     clf, decision_tree_nutriscore, accuracy = DecisionTreeNutriscore(filename, columns_ex6)
@@ -400,9 +407,15 @@ if __name__ == '__main__':
     for i in range(len(pms)):
         lambda_threshold = lambda_ex5[i]
         show_confusion_matrix(pms[i], real_scores, f'Pessimistic Majority Sorting (lambda={lambda_threshold})', 'Predicted', 'Real')
+    for i in range(len(pms_ours)):
+        lambda_threshold = lambda_ex5[i]
+        show_confusion_matrix(pms_ours[i], real_scores, f'Pessimistic Majority Sorting (lambda={lambda_threshold}) with our weights', 'Predicted', 'Real')
     for i in range(len(oms)):
         lambda_threshold = lambda_ex5[i]
-        show_confusion_matrix(oms[i], real_scores, f'Optimistic Majority Sorting (lambda={lambda_threshold})', 'Predicted', 'Real')    
+        show_confusion_matrix(oms[i], real_scores, f'Optimistic Majority Sorting (lambda={lambda_threshold})', 'Predicted', 'Real')  
+    for i in range(len(oms_ours)):
+        lambda_threshold = lambda_ex5[i]
+        show_confusion_matrix(oms_ours[i], real_scores, f'Optimistic Majority Sorting (lambda={lambda_threshold})  with our weights', 'Predicted', 'Real')  
     show_confusion_matrix(decision_tree_nutriscore, real_scores, 'Decision Tree', 'Predicted', 'Real')
     show_confusion_matrix(kNN_score, real_scores, 'kNN', 'Predicted', 'Real')
     show_confusion_matrix(RF_score, real_scores, 'Random Forest', 'Predicted', 'Real')
