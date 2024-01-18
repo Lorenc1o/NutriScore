@@ -365,6 +365,10 @@ if __name__ == '__main__':
     # Calculate the Random Forest Nutriscore
     clf_RF, RF_score, accuracy_RF = RandomForestNutriscore(filename, columns_ex6)
 
+    print('Decision Tree Accuracy:', accuracy)
+    print('kNN Accuracy:', accuracy_kNN)
+    print('Random Forest Accuracy:', accuracy_RF)
+
     # Print the computed score and the nutriscore from the dataset for each product
     dataset = pd.read_csv(filename, sep=';')
     #n_corrects = 0
