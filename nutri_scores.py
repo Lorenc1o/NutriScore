@@ -5,7 +5,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn import tree
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 
 def values_to_scale(dataset_location, column, intervals, sep=';'):
     # Load the dataset
@@ -237,7 +237,7 @@ def DecisionTreeNutriscore(dataset_location, columns, sep=';'):
 
     y_pred = clf.predict(X_test)
 
-    return clf, clf.predict(dataset.drop(columns=['nutriscore'])), accuracy_score(y_test, y_pred)
+    return clf, clf.predict(dataset.drop(columns=['nutriscore'])), accuracy_score(y_test, y_pred), f1_score(y_test, y_pred, average='macro'), precision_score(y_test, y_pred, average='macro'), recall_score(y_test, y_pred, average='macro')
 
 def kNN_Nutriscore(dataset_location, columns, sep=';'):
     # Load the dataset
@@ -265,7 +265,7 @@ def kNN_Nutriscore(dataset_location, columns, sep=';'):
 
     y_pred = clf.predict(X_test)
 
-    return clf, clf.predict(dataset.drop(columns=['nutriscore'])), accuracy_score(y_test, y_pred)
+    return clf, clf.predict(dataset.drop(columns=['nutriscore'])), accuracy_score(y_test, y_pred), f1_score(y_test, y_pred, average='macro'), precision_score(y_test, y_pred, average='macro'), recall_score(y_test, y_pred, average='macro')
 
 def RandomForestNutriscore(dataset_location, columns, sep=';'):
     # Load the dataset
@@ -293,7 +293,7 @@ def RandomForestNutriscore(dataset_location, columns, sep=';'):
 
     y_pred = clf.predict(X_test)
 
-    return clf, clf.predict(dataset.drop(columns=['nutriscore'])), accuracy_score(y_test, y_pred)
+    return clf, clf.predict(dataset.drop(columns=['nutriscore'])), accuracy_score(y_test, y_pred), f1_score(y_test, y_pred, average='macro'), precision_score(y_test, y_pred, average='macro'), recall_score(y_test, y_pred, average='macro')
 
 
 filename = 'data.csv'
@@ -357,17 +357,26 @@ if __name__ == '__main__':
     oms_ours = [OptimisticMajoritySorting(filename, columns_ex5, utility_functions, weights_ex5_ours, profiles, lambda_threshold, directions_ex5) for lambda_threshold in lambda_ex5]
 
     # Calculate the Decision Tree Nutriscore
-    clf, decision_tree_nutriscore, accuracy = DecisionTreeNutriscore(filename, columns_ex6)
+    clf, decision_tree_nutriscore, accuracy, f1, prec, recall = DecisionTreeNutriscore(filename, columns_ex6)
 
     # Calculate the kNN Nutriscore
-    clf_kNN, kNN_score, accuracy_kNN = kNN_Nutriscore(filename, columns_ex6)
+    clf_kNN, kNN_score, accuracy_kNN, f1_kNN, prec_kNN, recall_kNN = kNN_Nutriscore(filename, columns_ex6)
 
     # Calculate the Random Forest Nutriscore
-    clf_RF, RF_score, accuracy_RF = RandomForestNutriscore(filename, columns_ex6)
+    clf_RF, RF_score, accuracy_RF, f1_RF, prec_RF, recall_RF = RandomForestNutriscore(filename, columns_ex6)
 
     print('Decision Tree Accuracy:', accuracy)
+    print('Decision Tree F1 Score:', f1)
+    print('Decision Tree Precision:', prec)
+    print('Decision Tree Recall:', recall)
     print('kNN Accuracy:', accuracy_kNN)
+    print('kNN F1 Score:', f1_kNN)
+    print('kNN Precision:', prec_kNN)
+    print('kNN Recall:', recall_kNN)
     print('Random Forest Accuracy:', accuracy_RF)
+    print('Random Forest F1 Score:', f1_RF)
+    print('Random Forest Precision:', prec_RF)
+    print('Random Forest Recall:', recall_RF)
 
     # Print the computed score and the nutriscore from the dataset for each product
     dataset = pd.read_csv(filename, sep=';')
