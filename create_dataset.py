@@ -1,5 +1,5 @@
 import requests
-import json
+import numpy as np
 
 base_url = 'https://world.openfoodfacts.org/api/v0/'
 endpoint = 'search'
@@ -73,6 +73,9 @@ if response.status_code == 200:
                 else:
                     proteins_g = 0
                     n_zeros += 1
+
+                if perc_fruit == 0:
+                    perc_fruit = np.round(np.clip(np.random.normal(70, 15), 0, 100),2)
 
                 f.write(f'{id};{name};{nutriscore};{energy};{fat_g};{sugar_g};{sodium_mg};{perc_fruit};{fibers_g};{proteins_g}\n')
             except KeyError as e:
